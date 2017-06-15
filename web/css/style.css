@@ -33,26 +33,17 @@ html, body {
 
 }
 
-/*#submit {*/
-    /*float: left;*/
-    /*display: block;*/
-    /*color: #f2f2f2;*/
-    /*text-align: center;*/
-    /*text-decoration: none;*/
-    /*font-size: 10px;*/
-    /*position: absolute;*/
-/*}*/
-
 .main {
+
     padding: 16px;
-    margin-top: 50px;
+    margin-top: 70px;
     min-height: 81vh;
     background-image: url("https://68.media.tumblr.com/510dc9b6feeb4af7a0610eeb5b0e4243/tumblr_n8dvsjRSr91qg49aro1_r1_500.png");
 }
 
-div.container {
+.full-width {
     width: 100%;
-    /*position: absolute;*/
+    /*margin-left: 200px;*/
     /*min-height:100%;*/
 }
 
@@ -86,6 +77,7 @@ article {
     border-left: 1px solid gray;
     padding: 1em;
     overflow: hidden;
+    font-family: 'Amatica SC';
 }
 
 #wedding-title {
@@ -109,7 +101,7 @@ article {
 .container {
     display: table;
     height: 100%;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 #line {
@@ -122,4 +114,45 @@ article {
 
 .verticalLine {
     border-left: solid black;
+}
+
+#font {
+    font-family: 'Amatica SC';
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+tr {
+    background: white;
+}
+th {
+    background: #333;
+    color: white;
+    font-weight: bold;
+}
+td, th {
+    padding: 6px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.w3-container, .w3-panel {
+    padding: 0.01em 16px;
+}
+
+.w3-teal, .w3-hover-teal:hover {
+    color: #fff !important;
+    background-color: #009688 !important;
+}
+
+.blocktext {
+    display: table;
+    margin: 0 auto;
 }

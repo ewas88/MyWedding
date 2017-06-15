@@ -73,10 +73,12 @@ class Invitation
      *
      * @return Invitation
      */
-    public function setCode($code)
+    public function setCode()
     {
-        $this->code = $code;
-
+        $digits = str_split('abcdefghijklmnopqrstuvwxyz0123456789');
+        shuffle($digits);
+        $code = implode($digits);
+        $this->code = substr($code, 0, 5);
         return $this;
     }
 

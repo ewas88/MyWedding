@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+{% block body %}
+
+    <div id="wedding-title" style="margin: auto 100px; display: table">
+        <div id="line">
+            <h1 id="middlefont">KIEDY</h1>
+            <h2 id="middlefont">{{ wedding.weddingDate|date('d.m.Y') }}</h2>
+            <h2 id="middlefont">{{ wedding.weddingDate|date('H:i') }}</h2>
+        </div>
+        <div class="verticalLine" id="line">
+            <h1 id="middlefont">GDZIE</h1>
+            <h2 id="middlefont">CEREMONIA</h2>
+            <h2 id="middlefont">{{ wedding.churchName}}</h2>
+            <h2 id="middlefont">{{ wedding.churchAddress }}</h2>
+            <h2 id="middlefont">PRZYJĘCIE</h2>
+            <h2 id="middlefont">{{ wedding.venueName}}</h2>
+            <h2 id="middlefont">{{ wedding.venueAddress }}</h2>
+        </div>
+    </div>
+
+{% endblock %}

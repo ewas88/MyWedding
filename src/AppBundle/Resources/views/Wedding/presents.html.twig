@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+{% block javascript %}
+    <script src="{{ asset('js/app.js') }}"></script>
+{% endblock %}
+{% block body %}
+    <p>
+        <a>Would you like to get us a gift? We love them! Choose from the list below :)</a>
+    {% for present in presents %}
+        <p>
+            Name: {{ present.name }} <br>
+            Price: {{ present.price }} <br>
+            <a target="_blank" href="{{ present.link }}">Go to shop</a> <br>
+            <input id="selectItem" type="button" name="choose" value="I will buy this one">
+            {#<input id="checkCode"  name="check" value="Insert your invitation code">#}
+            <span id="checkCode">0zł</span>
+        </p>
+    {% endfor %}
+
+    </p>
+{% endblock %}

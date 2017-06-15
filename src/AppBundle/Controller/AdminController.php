@@ -31,16 +31,12 @@ class AdminController extends Controller
      */
     public function adminSiteAction()
     {
-        $userRepository = $this->getDoctrine()->getRepository('AppBundle:User');
-        $user = $userRepository->find($this->getUser());
+        $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
+        $wedding = $weddingRepository->find(1);
 
-        $date = $user->getWeddingDate()->format('Y-m-d');
-
-        $datetime1 = strtotime('2017-06-12');
-        $datetime2 = strtotime($date);
-
-        $secs = $datetime2 - $datetime1;
-        $days = $secs / 86400;
+        $datetime1 = strtotime(date('Y-m-d'));
+        $datetime2 = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
+        $days = ($datetime2 - $datetime1) / 86400;
 
         return ['days' => $days];
     }
@@ -53,10 +49,11 @@ class AdminController extends Controller
     public function invitationAction()
     {
         $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guests = $guestRepository->getByInvite();
+        $guests = $guestRepository->findBy(array('invitation' => NULL));
 
         $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
-        $invitations = $inviteRepository->sortInvites();
+        $invitations = $inviteRepository->findBy(array(), array('id' => 'ASC')
+        );
 
         return ['guests' => $guests, 'invitations' => $invitations];
     }
@@ -83,17 +80,18 @@ class AdminController extends Controller
             foreach ($guests as $guest) {
                 $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
                 $guest2 = $guestRepository->find($guest);
-                $guest2->setInviteId($newInv);
+                $guest2->setInvitation($invitation);
                 $em->persist($guest2);
                 $em->flush();
             }
         }
 
         $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guests = $guestRepository->getByInvite();
+        $guests = $guestRepository->findBy(array('invitation' => NULL));
 
         $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
-        $invitations = $inviteRepository->sortInvites();
+        $invitations = $inviteRepository->findBy(array(), array('id' => 'ASC')
+        );
 
         return ['guests' => $guests, 'invitations' => $invitations];
     }

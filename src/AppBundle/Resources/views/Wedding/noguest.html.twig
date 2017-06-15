@@ -1,0 +1,13 @@
+{% extends "noguest.html.twig" %}
+{% block body %}
+{% if code is not defined %}
+    <h1 style="color: darkred">
+    Niepoprawny kod - spróbuj jeszcze raz
+    </h1>
+    {% endif %}
+    <div id="wedding-title">
+        <h1 id="bigfont"><b>{{ wedding.brideName }} + {{ wedding.groomName }}</b></h1>
+        <h2 id="middlefont"> Pobieramy się!</h2>
+    </div>
+
+{% endblock %}

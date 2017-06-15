@@ -45,6 +45,29 @@ class WeddingInfo
     /**
      * @var string
      *
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="church_name", type="string", length=255)
      */
     private $churchName;

@@ -1,0 +1,35 @@
+{% extends "admin.html.twig" %}
+{% block body %}
+    <article>
+        <div style="float: left">
+            <h3>All presents - {{ presents|length }}</h3>
+            {% for present in presents %}
+                <p>
+                    Name: {{ present.name }} <br>
+                    Price: {{ present.price }} <br>
+                    <a target="_blank" href="{{ present.link }}">Go to shop</a> <br>
+                    Taken:
+                    {% if present.isTaken == 0 %}
+                        No
+                    {% else %}
+                        Yes
+                    {% endif %}
+                </p>
+            {% endfor %}
+        </div>
+        <div style="float: right">
+            <h3>Add new present</h3>
+            <form action="/admin/presents" method="POST" enctype="multipart/form-data">
+                <p>
+                    Name: <input type="text" name="name"><br>
+                    Price: <input type="" name="price"><br>
+                    Link: <input type="url" name="link"><br>
+                </p>
+                <p>
+                    <input type="submit" name="add" value="Add">
+                </p>
+            </form>
+        </div>
+    </article>
+
+{% endblock %}

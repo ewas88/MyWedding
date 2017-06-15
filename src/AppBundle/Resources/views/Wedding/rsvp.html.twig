@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ 'RSVP' }} {% endblock %}
+
+{% block body %}
+    {% if invitation is not defined %}
+        niepoprawny kod, sprobuj jeszcze raz.
+
+    {% else %}
+        <form action="/rsvp/{{ invitation.id }}" method="POST" enctype="multipart/form-data">
+        {% for guest in invitation.guests %}
+            <p>
+           Who: {{ guest.name }} {{ guest.surname }}
+            </p>
+            <p>
+           Response:
+                <select name="{{ guest.id }}-answer">
+                    <option value=1>I will come!</option>
+                    <option value=0>Sorry, I cannot make it...</option>
+                </select>
+            </p>
+            <p>
+                Hotel? <input type="checkbox" name="{{ guest.id }}-hotel" value=1>
+                Bus? <input type="checkbox" name="{{ guest.id }}-bus" value=1>
+            </p>
+            {#{% if guest.isSingle == 1 %}#}
+                {#<p>#}
+                    {#Enter date name and check all relevant information:#}
+                {#</p>#}
+                {#Name:#}
+                {#<input type="text" name="date_name">#}
+                {#Surname:#}
+                {#<input type="text" name="date_surname">#}
+                {#<p>#}
+                    {#Hotel? <input type="checkbox" name="hotel">#}
+                    {#Bus? <input type="checkbox" name="bus">#}
+            {#{% endif %}#}
+                {#</p>#}
+        {% endfor %}
+            <p>
+                <input type="submit" name="update" value="RSVP">
+            </p>
+        </form>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "admin.html.twig" %}
+{% block body %}
+    <article>
+        <div style="float: left">
+            <h3>All guests - {{ guests|length }}</h3>
+            {% for guest in guests %}
+                <p>
+                    Name: {{ guest.name }} {{ guest.surname }}
+                    e-mail: {{ guest.email }}
+                    Responded: {{ guest.isConfirmed }}
+                    Is coming: {{ guest.isComing }}
+                </p>
+            {% endfor %}
+        </div>
+        <div style="float: right">
+            <h3>Add new guest</h3>
+            <form action="/admin/guests" method="POST" enctype="multipart/form-data">
+                <p>
+                    Name: <input type="text" name="name"><br>
+                    Surname: <input type="text" name="surname"><br>
+                    email: <input type="email" name="email"><br>
+                    Relation:
+                    <select name="relation">
+                        <option value="family">Family</option>
+                        <option value="friend">Friend</option>
+                    </select>
+                    <br>
+                    Single:
+                    <select name="is_single">
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
+                    </select>
+                    <br>
+                    Invitation number (optional): <input type="number" name="invite" min="1"><br>
+                </p>
+                <p>
+                    <input type="submit" name="add" value="Add">
+                </p>
+            </form>
+        </div>
+    </article>
+
+{% endblock %}

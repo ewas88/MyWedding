@@ -94,11 +94,35 @@ class WeddingController extends Controller
     /**
      * @Route("/welovepresents")
      * @Template("AppBundle:Wedding:presents.html.twig")
+     * @Method("GET")
      */
     public function presentsAction()
     {
         $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
-        $presents = $presentRepository->findBy(array('isTaken' => 0));
+        $presents = $presentRepository->findBy(array('guest' => NULL));
+
+        return ['presents' => $presents];
+    }
+
+    /**
+     * @Route("/welovepresents")
+     * @Template("AppBundle:Wedding:presents.html.twig")
+     * @Method("POST")
+     */
+    public function choosePresentsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $present = $request->request->get('present');
+
+        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+        $guest = $guestRepository->find($session->get('name'));
+
+        $em->persist($guest);
+        $em->flush();
+
+        $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
+        $presents = $presentRepository->findBy(array('guest' => NULL));
 
         return ['presents' => $presents];
     }

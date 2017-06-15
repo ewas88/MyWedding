@@ -156,3 +156,18 @@ td, th {
     display: table;
     margin: 0 auto;
 }
+
+#keywords {
+    margin: 0 auto;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+#wrapper {
+    display: block;
+    width: 850px;
+    background: #fff;
+    margin: 0 auto;
+    padding: 10px 17px;
+    -webkit-box-shadow: 2px 2px 3px -1px rgba(0,0,0,0.35);
+}

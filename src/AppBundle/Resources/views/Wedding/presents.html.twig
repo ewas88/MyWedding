@@ -1,20 +1,26 @@
 {% extends "base.html.twig" %}
-{% block javascript %}
-    <script src="{{ asset('js/app.js') }}"></script>
-{% endblock %}
-{% block body %}
-    <p>
-        <a>Would you like to get us a gift? We love them! Choose from the list below :)</a>
-    {% for present in presents %}
-        <p>
-            Name: {{ present.name }} <br>
-            Price: {{ present.price }} <br>
-            <a target="_blank" href="{{ present.link }}">Go to shop</a> <br>
-            <input id="selectItem" type="button" name="choose" value="I will buy this one">
-            {#<input id="checkCode"  name="check" value="Insert your invitation code">#}
-            <span id="checkCode">0zł</span>
-        </p>
-    {% endfor %}
 
-    </p>
+{% block body %}
+    <div style="margin: auto; display: table">
+        <h2>Chciałbyś dać nam prezent, ale nie wiesz jaki? Pomyśleliśmy o tym!</h2>
+        <h2>Przejrzyj listę poniżej i wybierz taki, którym chciałbyś nas obdarować.</h2>
+<table id="myTable" class="tablesorter" >
+    <thead>
+            <tr id="middlefont">
+                <th style="width: 200px">Prezent <i class="fa fa-arrows-v"></i></th>
+                <th style="width: 200px">Cena <i class="fa fa-arrows-v"></i></th>
+                <th style="width: 200px">Gdzie kupić</th>
+                <th style="width: 200px"></th>
+            </tr>
+    </thead>
+    {% for present in presents %}
+            <tr id="middlefont">
+                <td>{{ present.name }} </td>
+                <td>{{ present.price }} </td>
+                <td><a href=" {{ present.link }} ">LINK</a></td>
+                <td><button formaction="#" formmethod="post" name="present" value="{{ present.id }}" id="font" style="margin: auto; display: table; font-size: 24px; background-color: black; color: white">Wybieram</button> </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 {% endblock %}

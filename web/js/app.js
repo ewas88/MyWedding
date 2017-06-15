@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
-    $( "#datepicker" ).datepicker();
+$( "#datepicker" ).datepicker();
+
 });
 
+
+
+$(document).ready(function()
+    {
+        $("#myTable").tablesorter();
+    }
+);

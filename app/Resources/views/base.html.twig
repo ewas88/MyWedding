@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <link href='https://fonts.googleapis.com/css?family=Amatica SC' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
+
+<body>
+<div class="container">
+
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/wedding">Wedding</a>
+        <a href="/">Getting there</a>
+        <a href="/welovepresents">Gift ideas</a>
+        <a href="/rsvp">RSVP</a>
+        <a type="text" style="float: right">&hearts;MyWedding</a>
+    </div>
+    <div class="main">
+
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+    </div>
+    <footer>2017 &hearts;MyWedding created by Ewas | <a style="color: darkgray;" href="/admin">Admin</a></footer>
+</div>
+</body>
 </html>

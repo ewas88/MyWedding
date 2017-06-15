@@ -1,0 +1,125 @@
+html, body {
+    font-family: 'Amatica SC';
+    /*height:100vh;*/
+    padding:0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.navbar input {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    text-decoration: none;
+    font-size: 25px;
+    position: absolute;
+
+}
+
+/*#submit {*/
+    /*float: left;*/
+    /*display: block;*/
+    /*color: #f2f2f2;*/
+    /*text-align: center;*/
+    /*text-decoration: none;*/
+    /*font-size: 10px;*/
+    /*position: absolute;*/
+/*}*/
+
+.main {
+    padding: 16px;
+    margin-top: 50px;
+    min-height: 81vh;
+    background-image: url("https://68.media.tumblr.com/510dc9b6feeb4af7a0610eeb5b0e4243/tumblr_n8dvsjRSr91qg49aro1_r1_500.png");
+}
+
+div.container {
+    width: 100%;
+    /*position: absolute;*/
+    /*min-height:100%;*/
+}
+
+
+header, footer {
+    padding: 1em;
+    color: white;
+    background-color: #333;
+    clear: left;
+    text-align: center;
+}
+
+nav {
+    float: left;
+    max-width: 160px;
+    margin: 0;
+    padding: 1em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul a input{
+    text-decoration: none;
+}
+
+article {
+    margin-left: 170px;
+    border-left: 1px solid gray;
+    padding: 1em;
+    overflow: hidden;
+}
+
+#wedding-title {
+    position: relative;
+    margin-top: 12%;
+    text-align: center;
+}
+
+#bigfont {
+    font-size: 100px;
+}
+
+#middlefont {
+    font-size: 30px;
+}
+
+#foot {
+    width: 100%;
+}
+
+.container {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+#line {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: 50%;
+    padding: 1rem;
+}
+
+.verticalLine {
+    border-left: solid black;
+}

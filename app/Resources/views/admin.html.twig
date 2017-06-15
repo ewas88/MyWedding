@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <link href='https://fonts.googleapis.com/css?family=Amatica SC' rel='stylesheet'>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    </head>
+    <body>
+    <div class="container">
+
+        <div class="navbar">
+            <a href="/admin">Home Admin</a>
+            <a href="/logout">Log Out</a>
+            <a href="/">Wedding Site</a>
+            <a type="text" style="float: right">&hearts;MyWedding</a>
+        </div>
+<div class="main">
+        <nav>
+            <ul>
+                <li><a href="/admin/guests">Guests</a></li>
+                <li><a href="/admin/invitations">Invitations</a></li>
+                <li><a href="/admin/presents">Presents</a></li>
+                {#<li><a href="/admin/sitting">Sitting Plan</a></li>#}
+                <li><a href="/admin/budget">Wedding Cost Estimate</a></li>
+                <li><a href="/admin/list">To-Do list</a></li>
+            </ul>
+        </nav>
+
+
+    {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+
+
+</div>
+        <footer>2017 &hearts;MyWedding created by Ewas | <a style="color: darkgray;" href="/admin">Admin</a> </footer>
+    </div>
+    </body>
+</html>

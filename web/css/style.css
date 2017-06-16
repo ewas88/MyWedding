@@ -82,16 +82,16 @@ article {
 
 #wedding-title {
     position: relative;
-    margin-top: 12%;
+    margin-top: 8%;
     text-align: center;
 }
 
 #bigfont {
-    font-size: 100px;
+    font-size: 120px;
 }
 
-#middlefont, input{
-    font-size: 30px;
+#middlefont{
+    font-size: 40px;
 }
 
 #foot {
@@ -189,6 +189,6 @@ input, p, option, select {
     font-size: 25px;
 }
 
-.middlefont {
+.middlefont, input {
     font-size: 30px;
 }

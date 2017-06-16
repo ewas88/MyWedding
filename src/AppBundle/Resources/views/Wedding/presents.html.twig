@@ -3,21 +3,22 @@
 {% block body %}
 
     <div class="w3-container w3-round" style="background-color: mediumaquamarine">
-        <h2 id="middlefont" align="center">Chciałbyś dać nam prezent, ale nie wiesz jaki? Pomyśleliśmy o tym!</h2>
-        <h2 id="middlefont" align="center">Przejrzyj listę poniżej i wybierz taki, którym chciałbyś nas obdarować.</h2>
+        <h2 class="middlefont" align="center">Chciałbyś dać nam prezent, ale nie wiesz jaki? Pomyśleliśmy o tym!</h2>
+        <h2 class="middlefont" align="center">Przejrzyj listę poniżej i wybierz taki, którym chciałbyś nas
+            obdarować.</h2>
     </div>
     {% if mypresents %}
         <div class="container" style="margin: auto; display: table; padding: 5px">
-            <h3 id="middlefont">Wybrane prezenty:</h3>
+            <h3 class="middlefont">Wybrane prezenty:</h3>
             <table style="border: dotted;">
-                <tr id="middlefont">
+                <tr class="middlefont">
                     <th style="width: 200px">Prezent</th>
                     <th style="width: 200px">Cena</th>
                     <th style="width: 200px">Gdzie kupić</th>
                     <th style="width: 200px"></th>
                 </tr>
                 {% for mypresent in mypresents %}
-                    <tr id="middlefont">
+                    <tr class="middlefont">
                         <td>{{ mypresent.name }} </td>
                         <td>{{ mypresent.price }} </td>
                         <td><a target="_blank" href=" {{ mypresent.link }} ">LINK</a></td>
@@ -34,33 +35,38 @@
             </table>
         </div>
     {% endif %}
-    <div class="container" style="margin: auto; display: table; padding: 5px">
-        <h3 id="middlefont">Lista dostępnych prezentów:</h3>
-        <table id="myTable" class="tablesorter" style="border: dotted;">
-            <thead>
-            <tr id="middlefont">
-                <th style="width: 200px">Prezent <i class="fa fa-arrows-v"></i></th>
-                <th style="width: 200px">Cena <i class="fa fa-arrows-v"></i></th>
-                <th style="width: 200px">Gdzie kupić</th>
-                <th style="width: 200px"></th>
-            </tr>
-            </thead>
-            {% for present in presents %}
-                <tr id="middlefont">
-                    <td>{{ present.name }} </td>
-                    <td>{{ present.price }} </td>
-                    <td><a target="_blank" href=" {{ present.link }} ">LINK</a></td>
-                    <td>
-                        <form action="#" method="post">
-                            <button name="present" value="{{ present.id }}" type="submit" id="font"
-                                    style="margin: auto; display: table; font-size: 24px; background-color: black; color: white">
-                                Wybieram
-                            </button>
-                        </form>
-                    </td>
+    {% if mypresents|length < 3 %}
+        <div class="container" style="margin: auto; display: table; padding: 5px">
+            <h3 class="middlefont">Lista dostępnych prezentów:</h3>
+            <table id="myTable" class="tablesorter" style="border: dotted;">
+                <thead>
+                <tr class="middlefont">
+                    <th style="width: 200px">Prezent <i class="fa fa-arrows-v"></i></th>
+                    <th style="width: 200px">Cena <i class="fa fa-arrows-v"></i></th>
+                    <th style="width: 200px">Gdzie kupić</th>
+                    <th style="width: 200px"></th>
                 </tr>
-            {% endfor %}
-        </table>
-    </div>
+                </thead>
+                {% for present in presents %}
+                    <tr class="middlefont">
+                        <td>{{ present.name }} </td>
+                        <td>{{ present.price }} </td>
+                        <td><a target="_blank" href=" {{ present.link }} ">LINK</a></td>
+                        <td>
+                            <form action="#" method="post">
+                                <button name="present" value="{{ present.id }}" type="submit" id="font"
+                                        style="margin: auto; display: table; font-size: 24px; background-color: black; color: white">
+                                    Wybieram
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <h3 align="center" class="middlefont">Maksymalnie można wybrać 3 prezenty.</h3>
+        <h3 align="center" class="middlefont">Zrezygnuj z jednego prezentu, aby zobaczyć listę dostępnych.</h3>
+    {% endif %}
 
 {% endblock %}

@@ -1,20 +1,25 @@
 {% extends "base.html.twig" %}
 {% block body %}
 
-    <div style="margin: auto; display: table">
-        <div id="line">
-            <h1 id="middlefont">KIEDY</h1>
-            <h2 id="middlefont">{{ wedding.weddingDate|date('d.m.Y') }}</h2>
-            <h2 id="middlefont">{{ wedding.weddingDate|date('H:i') }}</h2>
+    <div class="full-width" style="margin: auto; display: table">
+        <div class="w3-container w3-round" style="background-color: mediumaquamarine">
+            <h1 align="center" class="middlefont">GDZIE I KIEDY</h1>
         </div>
-        <div class="verticalLine" id="line">
-            <h1 id="middlefont">GDZIE</h1>
-            <h2 id="middlefont">CEREMONIA</h2>
-            <h2 id="middlefont">{{ wedding.churchName}}</h2>
-            <h2 id="middlefont">{{ wedding.churchAddress }}</h2>
-            <h2 id="middlefont">PRZYJĘCIE</h2>
-            <h2 id="middlefont">{{ wedding.venueName}}</h2>
-            <h2 id="middlefont">{{ wedding.venueAddress }}</h2>
+        <br>
+        <div align="center">
+            <h2 class="middlefont"><i class="fa fa-calendar"></i> {{ wedding.weddingDate|date('d.m.Y H:i') }}</h2>
+        </div>
+        <div align="center">
+            <div id="line">
+                <h2 class="middlefont"><i class="fa fa-venus-mars"></i> CEREMONIA</h2>
+                <h2 class="middlefont">{{ wedding.churchName }}</h2>
+                <h2 class="middlefont">{{ wedding.churchAddress }}</h2>
+            </div>
+            <div class="verticalLine" id="line">
+                <h2 class="middlefont"><i class="fa fa-glass"></i> PRZYJĘCIE</h2>
+                <h2 class="middlefont">{{ wedding.venueName }}</h2>
+                <h2 class="middlefont">{{ wedding.venueAddress }}</h2>
+            </div>
         </div>
     </div>
 

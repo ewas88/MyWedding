@@ -188,3 +188,7 @@ input, p, option, select {
 #sfont {
     font-size: 25px;
 }
+
+.middlefont {
+    font-size: 30px;
+}

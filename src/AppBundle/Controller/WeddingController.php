@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-//use AppBundle\Entity\Guest;
+use AppBundle\Entity\Guest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -135,8 +135,9 @@ class WeddingController extends Controller
     /**
      * @Route("/rsvp")
      * @Template("AppBundle:Wedding:rsvp.html.twig")
+     * @Method("GET")
      */
-    public function checkCodeAction(Request $request)
+    public function answersAction(Request $request)
     {
         $session = $request->getSession();
         $inviteId = $session->get('name');
@@ -148,42 +149,102 @@ class WeddingController extends Controller
     }
 
     /**
-     * @Route("/rsvp/{id}")
+     * @Route("/rsvp")
      * @Template("AppBundle:Wedding:check.html.twig")
      * @Method("POST")
      */
-    public function responseAction(Request $request, $id)
+    public function responseAction(Request $request)
     {
-
+        $session = $request->getSession();
+        $inviteId = $session->get('name');
         $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guests = $guestRepository->getByCode($id);
+        $guests = $guestRepository->findBy(array('invitation' => $inviteId));
 
+        if (empty($request->request->get('date_name'))) {
 
-        foreach ($guests as $guest) {
+            foreach ($guests as $person) {
 
-            $em = $this->getDoctrine()->getManager();
+                $person = $person->getId();
 
-            $a = $guest . '-answer';
-            $b = $guest . '-bus';
-            $c = $guest . '-hotel';
+                $em = $this->getDoctrine()->getManager();
 
-            $isComing = $request->request->get($a);
-            $isBus = $request->request->get($b);
-            $isHotel = $request->request->get($c);
+                $a = $person . '-answer';
+                $b = $person . '-bus';
+                $c = $person . '-hotel';
 
-            $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-            $guest2 = $guestRepository->find($guest);
+                $isComing = $request->request->get($a);
+                $isBus = $request->request->get($b);
+                $isHotel = $request->request->get($c);
 
-            $guest2->setIsConfirmed(1);
-            $guest2->setIsComing($isComing);
-            $guest2->setIsBus($isBus);
-            $guest2->setIsHotel($isHotel);
+                $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+                $guest = $guestRepository->find($person);
 
-            $em->persist($guest2);
-            $em->flush();
+                $guest->setIsConfirmed(1);
+                $guest->setIsComing($isComing);
+                $guest->setIsTransport($isBus);
+                $guest->setIsAccomodation($isHotel);
+
+                $em->persist($guest);
+                $em->flush();
+            }
+
+        } else {
+            foreach ($guests as $person) {
+
+                $person = $person->getId();
+
+                $em = $this->getDoctrine()->getManager();
+
+                $a = $person . '-answer';
+                $b = $person . '-bus';
+                $c = $person . '-hotel';
+
+                $isComing = $request->request->get($a);
+                $isBus = $request->request->get($b);
+                $isHotel = $request->request->get($c);
+
+                $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+                $guest = $guestRepository->find($person);
+
+                $guest->setIsConfirmed(1);
+                $guest->setIsComing($isComing);
+                $guest->setIsTransport($isBus);
+                $guest->setIsAccomodation($isHotel);
+                $guest->setIsSingle(0);
+
+                $em->persist($guest);
+                $em->flush();
+
+                $name = $request->request->get('date_name');
+                $surname = $request->request->get('date_surname');
+                $email = $request->request->get('date_email');
+                $isDateBus = $request->request->get('x-bus');
+                $isDateHotel = $request->request->get('x-hotel');
+
+                if ($email == "") {
+                    $email= $guest->getEmail();
+                }
+
+                $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+                $invitation = $invRepository->find($inviteId);
+
+                $guest2 = new Guest();
+                $guest2->setName($name);
+                $guest2->setSurname($surname);
+                $guest2->setEmail($email);
+                $guest2->setIsSingle(0);
+                $guest2->setInvitation($invitation);
+                $guest2->setIsConfirmed(1);
+                $guest2->setIsComing(1);
+                $guest2->setIsTransport($isDateBus);
+                $guest2->setIsAccomodation($isDateHotel);
+
+                $em->persist($guest2);
+                $em->flush();
+
+            }
+
         }
-
         return [];
     }
-
 }

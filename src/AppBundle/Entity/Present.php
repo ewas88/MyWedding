@@ -13,25 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
 class Present
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Guest", inversedBy="presents")
-     * @ORM\JoinColumn(name="guest_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Invitation", inversedBy="presents")
+     * @ORM\JoinColumn(name="invite_id", referencedColumnName="id", nullable=true)
      */
-    private $guest;
+    private $invitation;
 
     /**
      * @return mixed
      */
-    public function getGuest()
+    public function getInvitation()
     {
-        return $this->guest;
+        return $this->invitation;
     }
 
     /**
-     * @param mixed $guest
+     * @param mixed $invitation
      */
-    public function setGuest($guest)
+    public function setInvitation($invitation)
     {
-        $this->guest = $guest;
+        $this->invitation = $invitation;
     }
 
 

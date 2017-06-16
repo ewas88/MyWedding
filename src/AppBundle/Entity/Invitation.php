@@ -14,14 +14,35 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Invitation
 {
     /**
+     * @ORM\OneToMany(targetEntity="Present", mappedBy="invitation")
+     */
+    private $presents;
+    public function __construct() {
+        $this->presents = new ArrayCollection();
+        $this->guests = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPresents()
+    {
+        return $this->presents;
+    }
+
+    /**
+     * @param mixed $presents
+     */
+    public function setPresents($presents)
+    {
+        $this->presents = $presents;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="Guest", mappedBy="invitation")
      */
     private $guests;
 
-    public function __construct()
-    {
-        $this->guests = new ArrayCollection();
-    }
 
     /**
      * @return mixed

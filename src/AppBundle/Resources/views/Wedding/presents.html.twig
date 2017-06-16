@@ -1,26 +1,66 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div style="margin: auto; display: table">
-        <h2>Chciałbyś dać nam prezent, ale nie wiesz jaki? Pomyśleliśmy o tym!</h2>
-        <h2>Przejrzyj listę poniżej i wybierz taki, którym chciałbyś nas obdarować.</h2>
-<table id="myTable" class="tablesorter" >
-    <thead>
+
+    <div class="w3-container w3-round" style="background-color: mediumaquamarine">
+        <h2 id="middlefont">Chciałbyś dać nam prezent, ale nie wiesz jaki? Pomyśleliśmy o tym!</h2>
+        <h2 id="middlefont">Przejrzyj listę poniżej i wybierz taki, którym chciałbyś nas obdarować.</h2>
+    </div>
+    {% if mypresents %}
+        <div class="container" style="margin: auto; display: table; padding: 5px">
+            <h3 id="middlefont">Wybrane prezenty:</h3>
+            <table style="border: dotted;">
+                <tr id="middlefont">
+                    <th style="width: 200px">Prezent</th>
+                    <th style="width: 200px">Cena</th>
+                    <th style="width: 200px">Gdzie kupić</th>
+                    <th style="width: 200px"></th>
+                </tr>
+                {% for mypresent in mypresents %}
+                    <tr id="middlefont">
+                        <td>{{ mypresent.name }} </td>
+                        <td>{{ mypresent.price }} </td>
+                        <td><a target="_blank" href=" {{ mypresent.link }} ">LINK</a></td>
+                        <td>
+                            <form action="#" method="post">
+                                <button name="resign" value="{{ mypresent.id }}" type="submit" id="font"
+                                        style="margin: auto; display: table; font-size: 24px; background-color: black; color: white">
+                                    Rezygnuję
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+    <div class="container" style="margin: auto; display: table; padding: 5px">
+        <h3 id="middlefont">Lista dostępnych prezentów:</h3>
+        <table id="myTable" class="tablesorter" style="border: dotted;">
+            <thead>
             <tr id="middlefont">
                 <th style="width: 200px">Prezent <i class="fa fa-arrows-v"></i></th>
                 <th style="width: 200px">Cena <i class="fa fa-arrows-v"></i></th>
                 <th style="width: 200px">Gdzie kupić</th>
                 <th style="width: 200px"></th>
             </tr>
-    </thead>
-    {% for present in presents %}
-            <tr id="middlefont">
-                <td>{{ present.name }} </td>
-                <td>{{ present.price }} </td>
-                <td><a href=" {{ present.link }} ">LINK</a></td>
-                <td><button formaction="#" formmethod="post" name="present" value="{{ present.id }}" id="font" style="margin: auto; display: table; font-size: 24px; background-color: black; color: white">Wybieram</button> </td>
-            </tr>
-        {% endfor %}
+            </thead>
+            {% for present in presents %}
+                <tr id="middlefont">
+                    <td>{{ present.name }} </td>
+                    <td>{{ present.price }} </td>
+                    <td><a target="_blank" href=" {{ present.link }} ">LINK</a></td>
+                    <td>
+                        <form action="#" method="post">
+                            <button name="present" value="{{ present.id }}" type="submit" id="font"
+                                    style="margin: auto; display: table; font-size: 24px; background-color: black; color: white">
+                                Wybieram
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
         </table>
     </div>
+
 {% endblock %}

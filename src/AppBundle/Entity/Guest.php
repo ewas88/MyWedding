@@ -13,29 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Guest
 {
-    /**
-     * @ORM\OneToMany(targetEntity="Present", mappedBy="guest")
-     */
-    private $presents;
-    public function __construct() {
-        $this->presents = new ArrayCollection();
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getPresents()
-    {
-        return $this->presents;
-    }
-
-    /**
-     * @param mixed $presents
-     */
-    public function setPresents($presents)
-    {
-        $this->presents = $presents;
-    }
 
     /**
      * @ORM\ManyToOne(targetEntity="Invitation", inversedBy="guests")

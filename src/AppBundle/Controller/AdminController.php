@@ -72,7 +72,6 @@ class AdminController extends Controller
         $em->persist($invitation);
         $em->flush();
 
-        $newInv = $invitation->getId();
         $guests = $request->request->get('guest_list');
 
         if (!$guests == NULL) {

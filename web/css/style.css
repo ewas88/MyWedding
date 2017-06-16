@@ -90,7 +90,7 @@ article {
     font-size: 100px;
 }
 
-#middlefont {
+#middlefont, input{
     font-size: 30px;
 }
 
@@ -152,6 +152,10 @@ td, th {
     background-color: #009688 !important;
 }
 
+.w3-round, .w3-round-medium {
+    border-radius: 4px;
+}
+
 .blocktext {
     display: table;
     margin: 0 auto;
@@ -170,4 +174,17 @@ td, th {
     margin: 0 auto;
     padding: 10px 17px;
     -webkit-box-shadow: 2px 2px 3px -1px rgba(0,0,0,0.35);
+}
+
+input, p, option, select {
+    font-family: 'Amatica SC';
+}
+
+.w3-panel {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+#sfont {
+    font-size: 25px;
 }

@@ -21,23 +21,18 @@ class WeddingController extends Controller
      */
     public function mainSiteAction(Request $request)
     {
-
-        if (isset($_SESSION)) {
         $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
         $wedding = $weddingRepository->find(1);
 
-        $datetime1 = strtotime(date('Y-m-d'));
-        $datetime2 = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
-        $days = ($datetime2 - $datetime1) / 86400;
+        if (isset($_SESSION)) {
+            $datetime1 = strtotime(date('Y-m-d'));
+            $datetime2 = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
+            $days = ($datetime2 - $datetime1) / 86400;
 
-        return $this->render('AppBundle:Wedding:base.html.twig', array(
-            'days' => $days, 'wedding' => $wedding
-        ));
-
+            return $this->render('AppBundle:Wedding:base.html.twig', array(
+                'days' => $days, 'wedding' => $wedding
+            ));
         } else {
-            $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
-            $wedding = $weddingRepository->find(1);
-
             return $this->render('AppBundle:Wedding:noguest.html.twig', array(
                 'wedding' => $wedding, 'code' => 1
             ));
@@ -54,19 +49,19 @@ class WeddingController extends Controller
         $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
         $invitation = $invRepository->findOneBy(array('code' => $code));
 
+        $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
+        $wedding = $weddingRepository->find(1);
+
         if (!$invitation) {
-            $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
-            $wedding = $weddingRepository->find(1);
 
             return $this->render('AppBundle:Wedding:noguest.html.twig', array(
                 'wedding' => $wedding
             ));
         } else {
-            $session = new Session();
-            $session->set('name', $code);
 
-            $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
-            $wedding = $weddingRepository->find(1);
+            $session = $request->getSession();
+            $session->set('name', $invitation->getId());
+            $session->save();
 
             $datetime1 = strtotime(date('Y-m-d'));
             $datetime2 = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
@@ -94,65 +89,62 @@ class WeddingController extends Controller
     /**
      * @Route("/welovepresents")
      * @Template("AppBundle:Wedding:presents.html.twig")
-     * @Method("GET")
      */
-    public function presentsAction()
-    {
-        $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
-        $presents = $presentRepository->findBy(array('guest' => NULL));
-
-        return ['presents' => $presents];
-    }
-
-    /**
-     * @Route("/welovepresents")
-     * @Template("AppBundle:Wedding:presents.html.twig")
-     * @Method("POST")
-     */
-    public function choosePresentsAction()
+    public function choosePresentsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $present = $request->request->get('present');
+        $takePresent = $request->request->get('present');
+        $dropPresent = $request->request->get('resign');
 
-        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guest = $guestRepository->find($session->get('name'));
+        if ($takePresent) {
+            $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
+            $present = $presentRepository->find($takePresent);
 
-        $em->persist($guest);
-        $em->flush();
+            $session = $request->getSession();
+            $inviteId = $session->get('name');
+
+            $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+            $invitation = $inviteRepository->find($inviteId);
+
+            $present->setInvitation($invitation);
+            $em->persist($present);
+            $em->flush();
+        }
+
+        if ($dropPresent) {
+            $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
+            $present = $presentRepository->find($dropPresent);
+
+            $present->setInvitation(NULL);
+            $em->persist($present);
+            $em->flush();
+        }
 
         $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
-        $presents = $presentRepository->findBy(array('guest' => NULL));
+        $presents = $presentRepository->findBy(array('invitation' => NULL));
 
-        return ['presents' => $presents];
+        $session = $request->getSession();
+        $inviteId = $session->get('name');
+        $myPresents = $presentRepository->findBy(array('invitation' => $inviteId));
+
+        return ['presents' => $presents, 'mypresents' => $myPresents];
     }
 
-    /**
-     * @Route("/rsvp")
-     * @Template("AppBundle:Wedding:code.html.twig")
-     * @Method("GET")
-     */
-    public function codeAction()
-    {
-        return [];
-    }
 
     /**
      * @Route("/rsvp")
      * @Template("AppBundle:Wedding:rsvp.html.twig")
-     * @Method("POST")
      */
     public function checkCodeAction(Request $request)
     {
-        $code = $request->request->get('code');
-        $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
-        $invitation = $invRepository->findOneBy(array('code' => $code));
+        $session = $request->getSession();
+        $inviteId = $session->get('name');
 
-        if (!$invitation) {
-            return [];
-        } else {
-            return ['invitation' => $invitation];
-        }
+        $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+        $invitation = $invRepository->find($inviteId);
+
+        return ['invitation' => $invitation];
     }
 
     /**

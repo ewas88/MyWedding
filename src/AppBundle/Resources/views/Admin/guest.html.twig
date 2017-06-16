@@ -1,43 +1,53 @@
 {% extends "admin.html.twig" %}
 {% block body %}
     <article>
-        <div style="float: left">
-            <h3>All guests - {{ guests|length }}</h3>
-            {% for guest in guests %}
-                <p>
-                    Name: {{ guest.name }} {{ guest.surname }}
-                    e-mail: {{ guest.email }}
-                    Responded: {{ guest.isConfirmed }}
-                    Is coming: {{ guest.isComing }}
-                </p>
-            {% endfor %}
+        <div class="container" style="float: left; border: dotted; padding: 5px">
+            <h3>Wszyscy zaproszeni goście - {{ guests|length }}</h3>
+            <table>
+                <tr>
+                    <th style="width: 200px">Imię i Nazwisko</th>
+                    <th style="width: 200px">e-mail</th>
+                    <th style="width: 200px">Przyjdzie</th>
+                </tr>
+                {% for guest in guests %}
+                    <tr>
+                        <td>{{ guest.name }} {{ guest.surname }}</td>
+                        <td> {{ guest.email }}</td>
+                        <td>
+                            {% if guest.isComing == 0 %}
+                                <i style="color: red" class="fa fa-times"></i>
+                                {% elseif  guest.isComing == 1 %}
+                                    <i style="color: green" class="fa fa-check"></i>
+                                    {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
-        <div style="float: right">
-            <h3>Add new guest</h3>
-            <form action="/admin/guests" method="POST" enctype="multipart/form-data">
+
+        <div class="w3-container w3-teal" style="float: right;">
+            <h3>Dodaj nowego gościa</h3>
+            <form action="#" method="POST" enctype="multipart/form-data">
                 <p>
-                    Name: <input type="text" name="name"><br>
-                    Surname: <input type="text" name="surname"><br>
-                    email: <input type="email" name="email"><br>
-                    Relation:
-                    <select name="relation">
-                        <option value="family">Family</option>
-                        <option value="friend">Friend</option>
-                    </select>
-                    <br>
-                    Single:
+                    Imię: <input type="text" name="name"><br>
+                    Nazwisko: <input type="text" name="surname"><br>
+                    e-mail: <input type="email" name="email"><br>
+
+                    Singiel:
                     <select name="is_single">
-                        <option value=1>Yes</option>
-                        <option value=0>No</option>
+                        <option value=1>Tak</option>
+                        <option value=0>Nie</option>
+                        <option value=null>Nie dotyczy</option>
                     </select>
                     <br>
-                    Invitation number (optional): <input type="number" name="invite" min="1"><br>
+                    Numer zaproszenia (opcjonalnie): <input type="number" name="invite" min="1"><br>
                 </p>
                 <p>
-                    <input type="submit" name="add" value="Add">
+                    <input id="font" type="submit" name="check" value="Dodaj">
                 </p>
             </form>
         </div>
+
     </article>
 
 {% endblock %}

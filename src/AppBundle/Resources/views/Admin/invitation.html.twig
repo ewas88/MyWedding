@@ -1,6 +1,6 @@
 {% extends "admin.html.twig" %}
 {% block body %}
-    <article>
+    <article class="middlefont">
         <div class="container" style="float: left; border: dotted; padding: 5px">
             <h3>Wszystkie zaproszenia - {{ invitations|length }}</h3>
             <table>
@@ -19,7 +19,7 @@
 
         <div class="w3-container w3-teal" style="float: right;">
             <h3>Stwórz nowe zaproszenie</h3>
-            <form action="/admin/invitations" method="POST" enctype="multipart/form-data">
+            <form action="/admin/guests" method="POST" enctype="multipart/form-data">
                 <p>
                     Dodaj gości lub stwórz puste:
                     <br>

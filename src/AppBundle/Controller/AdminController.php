@@ -38,32 +38,15 @@ class AdminController extends Controller
         $datetime2 = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
         $days = ($datetime2 - $datetime1) / 86400;
 
-        return ['days' => $days];
+        return ['days' => $days, 'wedding' => $wedding];
     }
+
 
     /**
      * @Route("/invitations")
      * @Template("AppBundle:Admin:invitation.html.twig")
-     * @Method("GET")
      */
-    public function invitationAction()
-    {
-        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guests = $guestRepository->findBy(array('invitation' => NULL));
-
-        $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
-        $invitations = $inviteRepository->findBy(array(), array('id' => 'ASC')
-        );
-
-        return ['guests' => $guests, 'invitations' => $invitations];
-    }
-
-    /**
-     * @Route("/invitations")
-     * @Template("AppBundle:Admin:invitation.html.twig")
-     * @Method("POST")
-     */
-    public function newInvitationAction(Request $request)
+    public function invitationAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -95,23 +78,10 @@ class AdminController extends Controller
         return ['guests' => $guests, 'invitations' => $invitations];
     }
 
-    /**
-     * @Route("/guests")
-     * @Template("AppBundle:Admin:guest.html.twig")
-     * @Method("GET")
-     */
-    public function guestAction()
-    {
-        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guests = $guestRepository->sortGuests($this->getUser()->getId());
-
-        return ['guests' => $guests];
-    }
 
     /**
      * @Route("/guests")
      * @Template("AppBundle:Admin:guest.html.twig")
-     * @Method("POST")
      */
     public function newGuestAction(Request $request)
     {
@@ -120,7 +90,6 @@ class AdminController extends Controller
         $name = $request->request->get('name');
         $surname = $request->request->get('surname');
         $email = $request->request->get('email');
-        $relation = $request->request->get('relation');
         $isSingle = $request->request->get('is_single');
         $invite = $request->request->get('invite');
 
@@ -131,16 +100,14 @@ class AdminController extends Controller
         $guest->setName($name);
         $guest->setSurname($surname);
         $guest->setEmail($email);
-        $guest->setRelation($relation);
         $guest->setIsSingle($isSingle);
         $guest->setInvitation($invitation);
-        $guest->setUser($this->getUser());
 
         $em->persist($guest);
         $em->flush();
 
         $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
-        $guests = $guestRepository->sortGuests();
+        $guests = $guestRepository->findBy(array(), array('invitation' => 'ASC', 'name' => 'ASC'));
 
         return ['guests' => $guests];
     }

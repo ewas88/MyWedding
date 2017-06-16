@@ -36,7 +36,7 @@ html, body {
 .main {
 
     padding: 16px;
-    margin-top: 70px;
+    margin-top: 60px;
     min-height: 81vh;
     background-image: url("https://68.media.tumblr.com/510dc9b6feeb4af7a0610eeb5b0e4243/tumblr_n8dvsjRSr91qg49aro1_r1_500.png");
 }
@@ -58,14 +58,16 @@ header, footer {
 
 nav {
     float: left;
-    max-width: 160px;
+    max-width: 200px;
+
     margin: 0;
-    padding: 1em;
+    padding: 10px;
 }
 
 nav ul {
     list-style-type: none;
     padding: 0;
+
 }
 
 nav ul a input{
@@ -189,6 +191,6 @@ input, p, option, select {
     font-size: 25px;
 }
 
-.middlefont, input {
+.middlefont, input{
     font-size: 30px;
 }

@@ -6,12 +6,8 @@ use AppBundle\Entity\Guest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class WeddingController extends Controller
 {
@@ -126,9 +122,15 @@ class WeddingController extends Controller
 
         $session = $request->getSession();
         $inviteId = $session->get('name');
-        $myPresents = $presentRepository->findBy(array('invitation' => $inviteId));
 
-        return ['presents' => $presents, 'mypresents' => $myPresents];
+        if (!$inviteId) {
+            return [];
+
+        } else {
+            $myPresents = $presentRepository->findBy(array('invitation' => $inviteId));
+
+            return ['presents' => $presents, 'mypresents' => $myPresents];
+        }
     }
 
 
@@ -142,10 +144,17 @@ class WeddingController extends Controller
         $session = $request->getSession();
         $inviteId = $session->get('name');
 
-        $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
-        $invitation = $invRepository->find($inviteId);
+        if (!$inviteId) {
+            return [];
 
-        return ['invitation' => $invitation];
+        } else {
+
+            $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+            $invitation = $invRepository->find($inviteId);
+
+
+            return ['invitation' => $invitation];
+        }
     }
 
     /**
@@ -222,7 +231,7 @@ class WeddingController extends Controller
                 $isDateHotel = $request->request->get('x-hotel');
 
                 if ($email == "") {
-                    $email= $guest->getEmail();
+                    $email = $guest->getEmail();
                 }
 
                 $invRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');

@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <script src="{{ asset('js/app.js') }}"></script>
-        <link href='https://fonts.googleapis.com/css?family=Amatica SC' rel='stylesheet'>
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-        {% block stylesheets %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </head>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <link href='https://fonts.googleapis.com/css?family=Amatica SC' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</head>
 
-    <body>
-    <div class="full-width">
+<body>
+<div class="full-width">
 
-        <div class="navbar">
-            <a>Wprowadź swój kod z zaproszenia:</a>
-            <form action="/" method="POST">
+    <div class="navbar">
+        <a>Wprowadź swój kod z zaproszenia:</a>
+        <form action="/" method="POST">
             <a><input style="color: black; font-family: 'Amatica SC';" name="code" type="text" size="7"></a>
-            <a style="padding-left: 100px"><input id="submit" name="submit" type="submit" style="color: black; font-family: 'Amatica SC';" value="potwierdź"></a>
-            </form>
-            <a type="text" style="float: right">&hearts;MyWedding</a>
-        </div>
-        <div class="main">
-
-            {% block body %}{% endblock %}
-
-        </div>
-        <footer>2017 &hearts;MyWedding created by Ewas | <a style="color: darkgray;" href="/admin">Admin</a> </footer>
+            <a style="padding-left: 100px"><input id="submit" name="submit" type="submit"
+                                                  style="color: black; font-family: 'Amatica SC';"
+                                                  value="potwierdź"></a>
+        </form>
+        <a type="text" style="float: right">&hearts;MyWedding</a>
     </div>
-    </body>
+    <div class="main">
+
+        {% block body %}{% endblock %}
+
+    </div>
+    <footer>2017 &hearts;MyWedding created by Ewas | <a style="color: darkgray;" href="/admin">Admin</a></footer>
+</div>
+</body>
 </html>

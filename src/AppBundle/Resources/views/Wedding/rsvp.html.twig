@@ -3,57 +3,61 @@
 {% block title %} {{ 'RSVP' }} {% endblock %}
 
 {% block body %}
-
-    <div class="container" style="margin: auto; display: table; padding: 5px">
-        <form action="#" method="POST" enctype="multipart/form-data">
-            {% for guest in invitation.guests %}
-                <div id="middlefont" class="w3-panel w3-round"
-                     style=" background-color: mediumaquamarine; width: 320px; float: left; margin: 2px">
-                    <p align="center">
-                        <b>{{ guest.name }} {{ guest.surname }}</b>
-                    </p>
-                    <p>
-                        Odpowiedź:
-                        <select id="sfont" name="{{ guest.id }}-answer">
-                            <option value=1>Oczywiście, że będę!</option>
-                            <option value=0>Niestety nie dam rady przyjść...</option>
-                        </select>
-                    </p>
-                    <p>
-                        Opcje dodatkowe:<br>
-                        <input type="checkbox" name="{{ guest.id }}-hotel" value=1>Zakwaterowanie<br>
-                        <input type="checkbox" name="{{ guest.id }}-bus" value=1>Transport
-                    </p>
-
-                    {% if guest.isSingle == 1 %}
-                        <p>
-                            <input type="checkbox" id="choice" value=1>Dodaj osobę towarzyszącą<br>
+    {% if invitation is not defined %}
+        <div id="wedding-title">
+            <h1>Tylko zaproszeni goście mogą potwierdzić przybycie &hearts;</h1>
+        </div>
+    {% else %}
+        <div class="container" style="margin: auto; display: table; padding: 5px">
+            <form action="#" method="POST" enctype="multipart/form-data">
+                {% for guest in invitation.guests %}
+                    <div id="middlefont" class="w3-panel w3-round"
+                         style=" background-color: mediumaquamarine; width: 320px; float: left; margin: 2px">
+                        <p align="center">
+                            <b>{{ guest.name }} {{ guest.surname }}</b>
                         </p>
-                    {% endif %}
-                </div>
-                <div id="date" class="w3-panel w3-round middlefont"
-                     style=" background-color: mediumaquamarine; width: 320px; float: left; margin: 2px">
-                    <p align="center">
-                        <b>Osoba towarzysząca</b>
-                    </p>
-                    Imię:
-                    <input type="text" name="date_name"><br>
-                    Nazwisko:
-                    <input type="text" name="date_surname"><br>
-                    e-mail(opcjonalnie):
-                    <input type="email" name="date_email">
-                    <p>
-                        Opcje dodatkowe:<br>
-                        <input type="checkbox" name="x-hotel" value=1>Zakwaterowanie<br>
-                        <input type="checkbox" name="x-bus" value=1>Transport
-                    </p>
-                </div>
+                        <p>
+                            Odpowiedź:
+                            <select id="sfont" name="{{ guest.id }}-answer">
+                                <option value=1>Oczywiście, że będę!</option>
+                                <option value=0>Niestety nie dam rady przyjść...</option>
+                            </select>
+                        </p>
+                        <p>
+                            Opcje dodatkowe:<br>
+                            <input type="checkbox" name="{{ guest.id }}-hotel" value=1>Zakwaterowanie<br>
+                            <input type="checkbox" name="{{ guest.id }}-bus" value=1>Transport
+                        </p>
 
-            {% endfor %}
-            <p align="center">
-                <input type="submit" name="update" value="RSVP" style="font-weight: bold">
-            </p>
-        </form>
-    </div>
+                        {% if guest.isSingle == 1 %}
+                            <p>
+                                <input type="checkbox" id="choice" value=1>Dodaj osobę towarzyszącą<br>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div id="date" class="w3-panel w3-round middlefont"
+                         style=" background-color: mediumaquamarine; width: 320px; float: left; margin: 2px">
+                        <p align="center">
+                            <b>Osoba towarzysząca</b>
+                        </p>
+                        Imię:
+                        <input type="text" name="date_name"><br>
+                        Nazwisko:
+                        <input type="text" name="date_surname"><br>
+                        e-mail(opcjonalnie):
+                        <input type="email" name="date_email">
+                        <p>
+                            Opcje dodatkowe:<br>
+                            <input type="checkbox" name="x-hotel" value=1>Zakwaterowanie<br>
+                            <input type="checkbox" name="x-bus" value=1>Transport
+                        </p>
+                    </div>
 
+                {% endfor %}
+                <p align="center">
+                    <input type="submit" name="update" value="RSVP" style="font-weight: bold">
+                </p>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}

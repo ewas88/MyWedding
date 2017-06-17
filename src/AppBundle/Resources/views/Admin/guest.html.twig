@@ -1,8 +1,9 @@
 {% extends "admin.html.twig" %}
 {% block body %}
     <article class="middlefont">
-        <div class="container" style="float: left; border: dotted; padding: 5px">
-            <h3>Wszyscy zaproszeni goście - {{ guests|length }}</h3>
+        <div class="container" style="float: left;  padding: 5px">
+            <h1 align="center" class="w3-round" style="background-color: mediumaquamarine">Wszyscy zaproszeni goście
+                - {{ guests|length }}</h1>
             <table>
                 <tr>
                     <th style="width: 200px">Imię i Nazwisko</th>
@@ -23,12 +24,14 @@
 
                             {% endif %}
                         </td>
+                        <td class="delete"><a style="color: black" href="{{ path('delete_guest', {'id': guest.id }) }}"><span> <i
+                                            class="fa fa-times"></i> </span></a></td>
                     </tr>
                 {% endfor %}
             </table>
         </div>
 
-        <div class="w3-container w3-teal" style="float: right;">
+        <div class="w3-container w3-round" style="float: right;background-color: mediumaquamarine">
             <h3>Dodaj nowego gościa</h3>
             <form action="#" method="POST" enctype="multipart/form-data">
                 <p>

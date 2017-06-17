@@ -1,11 +1,12 @@
 {% extends "admin.html.twig" %}
 {% block body %}
     <article class="middlefont">
-        <div class="container" style="float: left; border: dotted; padding: 5px">
-            <h3>Wszystkie prezenty - {{ presents|length }}</h3>
+        <div class="container" style="float: left;  padding: 5px">
+            <h1 align="center" class="w3-round" style="background-color: mediumaquamarine">Wszystkie prezenty
+                - {{ presents|length }}</h1>
             <table>
                 <tr>
-                    <th style="width: 200px">Nazwa</th>
+                    <th style="width: 300px">Nazwa</th>
                     <th style="width: 100px">Cena</th>
                     <th style="width: 80px">Link</th>
                     <th style="width: 100px">Wybrany</th>
@@ -15,18 +16,23 @@
                         <td>{{ present.name }}</td>
                         <td>{{ present.price }}</td>
                         <td><a target="_blank" href="{{ present.link }}">Link</a></td>
-                        <td>
-                            {% if present.invitation is empty %}
-                                Nie
-                            {% else %}
-                                Tak
-                            {% endif %}
-                        </td>
+
+                        {% if present.invitation is empty %}
+                            <td style="color: red">Nie</td>
+                        {% else %}
+                            <td style="color: green">Tak</td>
+                        {% endif %}
+                        {% if present.invitation is empty %}
+                            <td class="delete"><a style="color: black"
+                                                  href="{{ path('delete_present', {'id': present.id }) }}"><span> <i
+                                                class="fa fa-times"></i> </span></a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>
         </div>
-        <div class="w3-container w3-teal" style="float: right;">
+
+        <div class="w3-container w3-round" style="float: right;background-color: mediumaquamarine">
             <h3>Dodaj nowy prezent</h3>
             <form action="#" method="POST" enctype="multipart/form-data">
                 <p>

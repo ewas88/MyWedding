@@ -14,13 +14,36 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Invitation
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=255, unique=true)
+     */
+    private $code;
+
+    /**
      * @ORM\OneToMany(targetEntity="Present", mappedBy="invitation")
      */
     private $presents;
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->presents = new ArrayCollection();
         $this->guests = new ArrayCollection();
     }
+
+    /**
+     * @ORM\OneToMany(targetEntity="Guest", mappedBy="invitation")
+     */
+    private $guests;
 
     /**
      * @return mixed
@@ -39,12 +62,6 @@ class Invitation
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="Guest", mappedBy="invitation")
-     */
-    private $guests;
-
-
-    /**
      * @return mixed
      */
     public function getGuests()
@@ -59,23 +76,6 @@ class Invitation
     {
         $this->guests = $guests;
     }
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="code", type="string", length=255, unique=true)
-     */
-    private $code;
-
 
     /**
      * Get id

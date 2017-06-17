@@ -11,11 +11,5 @@ use Doctrine\ORM\EntityRepository;
  */
 class InvitationRepository extends EntityRepository
 {
-    public function sortInvites()
-    {
-        $query = $this->_em->createQuery(
-            "SELECT i FROM AppBundle:Invitation i ORDER BY i.id ASC");
 
-        return $query->getResult();
-    }
 }

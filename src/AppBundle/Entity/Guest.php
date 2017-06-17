@@ -16,28 +16,6 @@ class Guest
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Invitation", inversedBy="guests")
-     * @ORM\JoinColumn(name="invite_id", referencedColumnName="id", nullable=true)
-     */
-    private $invitation;
-
-    /**
-     * @return mixed
-     */
-    public function getInvitation()
-    {
-        return $this->invitation;
-    }
-
-    /**
-     * @param mixed $invitation
-     */
-    public function setInvitation($invitation)
-    {
-        $this->invitation = $invitation;
-    }
-
-    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -102,6 +80,27 @@ class Guest
      */
     private $isAccomodation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Invitation", inversedBy="guests")
+     * @ORM\JoinColumn(name="invite_id", referencedColumnName="id", nullable=true)
+     */
+    private $invitation;
+
+    /**
+     * @return mixed
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
+    }
+
+    /**
+     * @param mixed $invitation
+     */
+    public function setInvitation($invitation)
+    {
+        $this->invitation = $invitation;
+    }
 
     /**
      * Get id

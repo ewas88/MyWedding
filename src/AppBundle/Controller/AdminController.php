@@ -9,14 +9,8 @@ use AppBundle\Entity\ToDoList;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-//use Symfony\Component\Validator\Constraints\DateTime;
-
 use Symfony\Component\HttpFoundation\Request;
-
-//use Symfony\Component\HttpFoundation\Response;
-//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-//use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -41,12 +35,41 @@ class AdminController extends Controller
         return ['days' => $days, 'wedding' => $wedding];
     }
 
+    /**
+     * @Route("/info")
+     * @Template("AppBundle:Admin:info.html.twig")
+     */
+    public function infoSiteAction()
+    {
+        $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
+        $wedding = $weddingRepository->find(1);
+        return ['wedding' => $wedding];
+    }
 
     /**
      * @Route("/invitations")
      * @Template("AppBundle:Admin:invitation.html.twig")
+     * @Method("GET")
      */
-    public function invitationAction(Request $request)
+    public function invitationAction()
+    {
+        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+        $guests = $guestRepository->findBy(array('invitation' => NULL));
+        $people = $guestRepository->findAll();
+
+        $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+        $invitations = $inviteRepository->findBy(array(), array('id' => 'ASC')
+        );
+
+        return ['guests' => $guests, 'invitations' => $invitations, 'people' => $people];
+    }
+
+    /**
+     * @Route("/invitations")
+     * @Template("AppBundle:Admin:invitation.html.twig")
+     * @Method("POST")
+     */
+    public function newInvitationAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -70,12 +93,36 @@ class AdminController extends Controller
 
         $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
         $guests = $guestRepository->findBy(array('invitation' => NULL));
+        $people = $guestRepository->findAll();
 
         $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
         $invitations = $inviteRepository->findBy(array(), array('id' => 'ASC')
         );
 
-        return ['guests' => $guests, 'invitations' => $invitations];
+        return ['guests' => $guests, 'invitations' => $invitations, 'people' => $people];
+    }
+
+    /**
+     * @Route("/invitations/delete/{id}", name="delete_invite")
+     * @Template("AppBundle:Admin:invitation.html.twig")
+     */
+    public function deleteInviteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+        $invite = $inviteRepository->find($id);
+        $em->remove($invite);
+        $em->flush();
+
+        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+        $guests = $guestRepository->findBy(array('invitation' => NULL));
+        $people = $guestRepository->findAll();
+
+        $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+        $invitations = $inviteRepository->findBy(array(), array('id' => 'ASC')
+        );
+
+        return ['guests' => $guests, 'invitations' => $invitations, 'people' => $people];
     }
 
     /**
@@ -135,6 +182,24 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/guests/delete/{id}", name="delete_guest")
+     * @Template("AppBundle:Admin:guest.html.twig")
+     */
+    public function deleteGuestAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+        $guest = $guestRepository->find($id);
+        $em->remove($guest);
+        $em->flush();
+
+        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+        $guests = $guestRepository->findBy(array(), array('invitation' => 'ASC', 'name' => 'ASC'));
+
+        return ['guests' => $guests];
+    }
+
+    /**
      * @Route("/presents")
      * @Template("AppBundle:Admin:present.html.twig")
      * @Method("GET")
@@ -176,14 +241,23 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/budget")
-     * @Template("AppBundle:Admin:cost.html.twig")
-     * @Method("GET")
+     * @Route("/presents/delete/{id}", name="delete_present")
+     * @Template("AppBundle:Admin:present.html.twig")
      */
-    public function budgetAction()
+    public function deletePresentAction(Request $request, $id)
     {
-        return [];
+        $em = $this->getDoctrine()->getManager();
+        $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
+        $present = $presentRepository->find($id);
+        $em->remove($present);
+        $em->flush();
+
+        $presentsRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
+        $presents = $presentsRepository->findBy(array(), array('name' => 'ASC'));
+
+        return ['presents' => $presents];
     }
+
 
     /**
      * @Route("/list")
@@ -193,7 +267,7 @@ class AdminController extends Controller
     public function listAction()
     {
         $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
-        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC','deadline' => 'ASC'));
+        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC', 'deadline' => 'ASC'));
 
         return ['tasks' => $tasks];
     }
@@ -225,7 +299,7 @@ class AdminController extends Controller
         $em->flush();
 
         $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
-        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC','deadline' => 'ASC'));
+        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC', 'deadline' => 'ASC'));
 
         return ['tasks' => $tasks];
     }
@@ -244,7 +318,7 @@ class AdminController extends Controller
         $em->flush();
 
         $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
-        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC','deadline' => 'ASC'));
+        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC', 'deadline' => 'ASC'));
 
         return ['tasks' => $tasks];
 
@@ -263,7 +337,7 @@ class AdminController extends Controller
         $em->flush();
 
         $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
-        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC','deadline' => 'ASC'));
+        $tasks = $tasksRepository->findBy(array(), array('isDone' => 'ASC', 'deadline' => 'ASC'));
 
         return ['tasks' => $tasks];
     }

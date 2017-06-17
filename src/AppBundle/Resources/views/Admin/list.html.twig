@@ -1,34 +1,10 @@
 {% extends "admin.html.twig" %}
 {% block body %}
     <article>
-        {#<div style="float: left">#}
-        {#<h3>TO DO LIST</h3>#}
-        {#{% for task in tasks %}#}
-        {#<p>#}
-        {#Name: {{ task.task }}#}
-
-        {#{% if task.deadline is not null %}#}
-        {#deadline: {{ task.deadline|date('d M Y') }}#}
-        {#{% endif %}#}
-        {#Is done: {{ task.isDone }}#}
-        {#</p>#}
-        {#{% endfor %}#}
-        {#</div>#}
-        {#<div style="float: right">#}
-        {#<h3>Add new task</h3>#}
-        {#<form action="/admin/list" method="POST" enctype="multipart/form-data">#}
-        {#<p>#}
-        {#Task: <input type="text" name="task"><br>#}
-        {#Deadline: <input name="deadline" type="text" id="datepicker"><br>#}
-        {#</p>#}
-        {#<p>#}
-        {#<input type="submit" name="add" value="Add">#}
-        {#</p>#}
-        {#</form>#}
-        {#</div>#}
 
         <div style="margin-top: -80px;">
-            <h2 align="center">Lista rzeczy do zrobienia przed ślubem</h2>
+            <h2 align="center" class="w3-container w3-round" style="background-color: mediumaquamarine">Lista rzeczy do
+                zrobienia przed ślubem</h2>
             <form action="#" method="post" style="margin: auto; display: table; padding: 5px">
                 <input style="width: 200px" class="todo" type="text" name="task" placeholder="Zadanie">
                 <input style="width: 120px" class="todo" name="deadline" type="text" id="datepicker"

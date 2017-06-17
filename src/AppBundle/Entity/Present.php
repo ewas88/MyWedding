@@ -12,28 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Present
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="Invitation", inversedBy="presents")
-     * @ORM\JoinColumn(name="invite_id", referencedColumnName="id", nullable=true)
-     */
-    private $invitation;
-
-    /**
-     * @return mixed
-     */
-    public function getInvitation()
-    {
-        return $this->invitation;
-    }
-
-    /**
-     * @param mixed $invitation
-     */
-    public function setInvitation($invitation)
-    {
-        $this->invitation = $invitation;
-    }
-
 
     /**
      * @var int
@@ -64,6 +42,28 @@ class Present
      * @ORM\Column(name="link", type="string", length=255)
      */
     private $link;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Invitation", inversedBy="presents")
+     * @ORM\JoinColumn(name="invite_id", referencedColumnName="id", nullable=true)
+     */
+    private $invitation;
+
+    /**
+     * @return mixed
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
+    }
+
+    /**
+     * @param mixed $invitation
+     */
+    public function setInvitation($invitation)
+    {
+        $this->invitation = $invitation;
+    }
 
 
     /**

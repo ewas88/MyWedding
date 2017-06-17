@@ -1,0 +1,24 @@
+{% extends "admin.html.twig" %}
+{% block body %}
+    <article>
+        <h1 align="center" style="margin-top: -30px;">Szczegółowe informacje na temat ślubu</h1>
+        <form class="w3-container w3-round"
+              style="background-color: mediumaquamarine; width: 60%; margin: auto; display: table; padding: 5px"
+              action="#" method="post">
+            Imię panny młodej: <input type="text" name="brideName" placeholder="{{ wedding.brideName }}"><br>
+            Imię pana młodego: <input type="text" name="groomName" placeholder="{{ wedding.groomName }}"><br>
+            Data ślubu: <input type="datetime" name="date"
+                               placeholder="{{ wedding.weddingDate|date('d.m.Y H:i') }}"><br>
+            Miejsce ślubu: <input type="text" name="city" placeholder="{{ wedding.city }}"><br>
+            Kościół: <input type="text" name="churchName" placeholder="{{ wedding.churchName }}"><br>
+            Adres kościoła: <input type="text" name="churchAddress" placeholder="{{ wedding.churchAddress }}"><br>
+            Restauracja: <input type="text" name="venueName" placeholder="{{ wedding.venueName }}"><br>
+            Adres restauracji: <input type="text" name="venueAddress" placeholder="{{ wedding.venueAddress }}"><br>
+            Transport dla gości: <input type="text" name="isTransport"
+                                        placeholder=" {% if wedding.isTransport == 0 %} NIE {% else %} TAK {% endif %}"><br>
+            Zakwaterowanie dla gości: <input type="text" name="isAccomodation"
+                                             placeholder="{% if wedding.isAccomodation == 0 %} NIE {% else %} TAK {% endif %}"><br>
+            Budżet: <input type="number" name="budget" placeholder="{{ wedding.budget }}"><br>
+        </form>
+    </article>
+{% endblock %}

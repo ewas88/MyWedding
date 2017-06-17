@@ -1,24 +1,27 @@
 {% extends "admin.html.twig" %}
 {% block body %}
-    <article>
+    <article class="middlefont">
         <div class="container" style="float: left; border: dotted; padding: 5px">
             <h3>Wszyscy zaproszeni goście - {{ guests|length }}</h3>
             <table>
                 <tr>
                     <th style="width: 200px">Imię i Nazwisko</th>
                     <th style="width: 200px">e-mail</th>
-                    <th style="width: 200px">Przyjdzie</th>
+                    <th style="width: 100px">Odp</th>
                 </tr>
                 {% for guest in guests %}
                     <tr>
                         <td>{{ guest.name }} {{ guest.surname }}</td>
                         <td> {{ guest.email }}</td>
                         <td>
-                            {% if guest.isComing == 0 %}
-                                <i style="color: red" class="fa fa-times"></i>
-                                {% elseif  guest.isComing == 1 %}
-                                    <i style="color: green" class="fa fa-check"></i>
-                                    {% endif %}
+                            {% if  guest.isComing is sameas(false) %}
+                                <p align="center" style="color: red">&#9785;</p>
+
+                            {% elseif  guest.isComing == 1 %}
+                                <p align="center" style="color: green">&#9786;</p>
+                            {% elseif guest.isComing is null %}
+
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
@@ -32,15 +35,15 @@
                     Imię: <input type="text" name="name"><br>
                     Nazwisko: <input type="text" name="surname"><br>
                     e-mail: <input type="email" name="email"><br>
-
                     Singiel:
                     <select name="is_single">
                         <option value=1>Tak</option>
                         <option value=0>Nie</option>
-                        <option value=null>Nie dotyczy</option>
+                        <option value=2>Nie dotyczy</option>
                     </select>
                     <br>
-                    Numer zaproszenia (opcjonalnie): <input type="number" name="invite" min="1"><br>
+                    Numer zaproszenia (opcjonalnie):<br>
+                    <input type="number" name="invite" min="1" size="5"><br>
                 </p>
                 <p>
                     <input id="font" type="submit" name="check" value="Dodaj">

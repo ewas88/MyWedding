@@ -1,32 +1,41 @@
 {% extends "admin.html.twig" %}
 {% block body %}
-    <article>
-        <div style="float: left">
-            <h3>All presents - {{ presents|length }}</h3>
-            {% for present in presents %}
-                <p>
-                    Name: {{ present.name }} <br>
-                    Price: {{ present.price }} <br>
-                    <a target="_blank" href="{{ present.link }}">Go to shop</a> <br>
-                    Taken:
-                    {% if present.isTaken == 0 %}
-                        No
-                    {% else %}
-                        Yes
-                    {% endif %}
-                </p>
-            {% endfor %}
+    <article class="middlefont">
+        <div class="container" style="float: left; border: dotted; padding: 5px">
+            <h3>Wszystkie prezenty - {{ presents|length }}</h3>
+            <table>
+                <tr>
+                    <th style="width: 200px">Nazwa</th>
+                    <th style="width: 100px">Cena</th>
+                    <th style="width: 80px">Link</th>
+                    <th style="width: 100px">Wybrany</th>
+                </tr>
+                {% for present in presents %}
+                    <tr>
+                        <td>{{ present.name }}</td>
+                        <td>{{ present.price }}</td>
+                        <td><a target="_blank" href="{{ present.link }}">Link</a></td>
+                        <td>
+                            {% if present.invitation is empty %}
+                                Nie
+                            {% else %}
+                                Tak
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
-        <div style="float: right">
-            <h3>Add new present</h3>
-            <form action="/admin/presents" method="POST" enctype="multipart/form-data">
+        <div class="w3-container w3-teal" style="float: right;">
+            <h3>Dodaj prezent</h3>
+            <form action="#" method="POST" enctype="multipart/form-data">
                 <p>
-                    Name: <input type="text" name="name"><br>
-                    Price: <input type="" name="price"><br>
+                    Nazwa: <input type="text" name="name"><br>
+                    Cena: <input type="number" min="1" step="any" name="price"><br>
                     Link: <input type="url" name="link"><br>
                 </p>
                 <p>
-                    <input type="submit" name="add" value="Add">
+                    <input type="submit" name="add" value="Dodaj">
                 </p>
             </form>
         </div>

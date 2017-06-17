@@ -78,10 +78,23 @@ class AdminController extends Controller
         return ['guests' => $guests, 'invitations' => $invitations];
     }
 
+    /**
+     * @Route("/guests")
+     * @Template("AppBundle:Admin:guest.html.twig")
+     * @Method("GET")
+     */
+    public function guestsAction()
+    {
+        $guestRepository = $this->getDoctrine()->getRepository('AppBundle:Guest');
+        $guests = $guestRepository->findBy(array(), array('invitation' => 'ASC', 'name' => 'ASC'));
+
+        return ['guests' => $guests];
+    }
 
     /**
      * @Route("/guests")
      * @Template("AppBundle:Admin:guest.html.twig")
+     * @Method("POST")
      */
     public function newGuestAction(Request $request)
     {
@@ -93,8 +106,17 @@ class AdminController extends Controller
         $isSingle = $request->request->get('is_single');
         $invite = $request->request->get('invite');
 
-        $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
-        $invitation = $inviteRepository->find($invite);
+        if ($invite == "") {
+            $invitation = NULL;
+        } else {
+
+            $inviteRepository = $this->getDoctrine()->getRepository('AppBundle:Invitation');
+            $invitation = $inviteRepository->find($invite);
+        }
+
+        if ($isSingle == 2) {
+            $isSingle = NULL;
+        }
 
         $guest = new Guest();
         $guest->setName($name);
@@ -120,7 +142,7 @@ class AdminController extends Controller
     public function presentAction()
     {
         $presentsRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
-        $presents = $presentsRepository->sortPresents();
+        $presents = $presentsRepository->findBy(array(), array('name' => 'ASC'));
 
         return ['presents' => $presents];
     }
@@ -142,13 +164,13 @@ class AdminController extends Controller
         $present->setName($name);
         $present->setPrice($price);
         $present->setLink($link);
-        $present->setIsTaken(0);
+        $present->setInvitation(NULL);
 
         $em->persist($present);
         $em->flush();
 
         $presentsRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
-        $presents = $presentsRepository->sortPresents();
+        $presents = $presentsRepository->findBy(array(), array('name' => 'ASC'));
 
         return ['presents' => $presents];
     }

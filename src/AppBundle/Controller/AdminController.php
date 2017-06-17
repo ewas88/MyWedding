@@ -192,7 +192,7 @@ class AdminController extends Controller
      */
     public function listAction()
     {
-        $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDo');
+        $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
         $tasks = $tasksRepository->findAll();
 
         return ['tasks' => $tasks];
@@ -221,7 +221,7 @@ class AdminController extends Controller
         $em->persist($task);
         $em->flush();
 
-        $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDo');
+        $tasksRepository = $this->getDoctrine()->getRepository('AppBundle:ToDoList');
         $tasks = $tasksRepository->findAll();
 
         return ['tasks' => $tasks];

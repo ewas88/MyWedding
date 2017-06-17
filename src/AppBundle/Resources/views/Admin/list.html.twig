@@ -2,48 +2,57 @@
 {% block body %}
     <article>
         {#<div style="float: left">#}
-            {#<h3>TO DO LIST</h3>#}
-            {#{% for task in tasks %}#}
-                {#<p>#}
-                    {#Name: {{ task.task }}#}
+        {#<h3>TO DO LIST</h3>#}
+        {#{% for task in tasks %}#}
+        {#<p>#}
+        {#Name: {{ task.task }}#}
 
-                {#{% if task.deadline is not null %}#}
-                    {#deadline: {{ task.deadline|date('d M Y') }}#}
-                    {#{% endif %}#}
-                    {#Is done: {{ task.isDone }}#}
-                {#</p>#}
-            {#{% endfor %}#}
+        {#{% if task.deadline is not null %}#}
+        {#deadline: {{ task.deadline|date('d M Y') }}#}
+        {#{% endif %}#}
+        {#Is done: {{ task.isDone }}#}
+        {#</p>#}
+        {#{% endfor %}#}
         {#</div>#}
         {#<div style="float: right">#}
-            {#<h3>Add new task</h3>#}
-            {#<form action="/admin/list" method="POST" enctype="multipart/form-data">#}
-                {#<p>#}
-                    {#Task: <input type="text" name="task"><br>#}
-                    {#Deadline: <input name="deadline" type="text" id="datepicker"><br>#}
-                {#</p>#}
-                {#<p>#}
-                    {#<input type="submit" name="add" value="Add">#}
-                {#</p>#}
-            {#</form>#}
+        {#<h3>Add new task</h3>#}
+        {#<form action="/admin/list" method="POST" enctype="multipart/form-data">#}
+        {#<p>#}
+        {#Task: <input type="text" name="task"><br>#}
+        {#Deadline: <input name="deadline" type="text" id="datepicker"><br>#}
+        {#</p>#}
+        {#<p>#}
+        {#<input type="submit" name="add" value="Add">#}
+        {#</p>#}
+        {#</form>#}
         {#</div>#}
 
-        <div id="myDIV" class="header">
-            <h2>Lista rzeczy do zrobienia przed ślubem</h2>
-            <input class="todo" type="text" id="myInput" placeholder="Nazwa...">
-            <input class="todo" name="deadline" type="text" id="datepicker" placeholder="Do kiedy">
-            <span onclick="newElement()" class="addBtn">Dodaj</span>
+        <div style="margin-top: -80px;">
+            <h2 align="center">Lista rzeczy do zrobienia przed ślubem</h2>
+            <form action="#" method="post" style="margin: auto; display: table; padding: 5px">
+                <input style="width: 200px" class="todo" type="text" name="task" placeholder="Zadanie">
+                <input style="width: 120px" class="todo" name="deadline" type="text" id="datepicker"
+                       placeholder="Do kiedy">
+                <input style="width: 80px; border: dotted" type="submit" class="addBtn" value="Dodaj">
+            </form>
         </div>
-<br>
-        <ul class="todo" id="myUL">
+
+        <ul class="todo" style="margin: auto; display: table; padding: 0">
             {% for task in tasks %}
-                <li class="todo"> {{ task.task }} - {{ task.deadline|date('d.m.Y') }}</li>
-                {% endfor %}
-            {#<li>Hit the gym</li>#}
-            {#<li class="checked">Pay bills</li>#}
-            {#<li>Meet George</li>#}
-            {#<li>Buy eggs</li>#}
-            {#<li>Read a book</li>#}
-            {#<li>Organize office</li>#}
+                {% if task.isDone == 0 %}
+                    <li class="todo">&hearts; <b>{{ task.task }} | {{ task.deadline|date('d.m.Y') }}</b>
+                        <a style="color: black" href="{{ path('done_list', {'id': task.id }) }}"><span class="done"> <i
+                                        class="fa fa-check"></i> </span></a>
+                        <a style="color: black" href="{{ path('delete_list', {'id': task.id }) }}"><span class="close"> <i
+                                        class="fa fa-times"></i> </span></a>
+                    </li>
+                {% else %}
+                    <li class="todo">&hearts; <s>{{ task.task }} | {{ task.deadline|date('d.m.Y') }}</s>
+                        <a style="color: black" href="{{ path('delete_list', {'id': task.id }) }}"><span
+                                    class="close"><i class="fa fa-times"></i> </span></a>
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
 
     </article>

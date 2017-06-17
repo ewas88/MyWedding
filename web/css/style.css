@@ -1,7 +1,7 @@
 html, body {
     font-family: 'Amatica SC';
     /*height:100vh;*/
-    padding:0;
+    padding: 0;
 }
 
 .navbar {
@@ -47,7 +47,6 @@ html, body {
     /*min-height:100%;*/
 }
 
-
 header, footer {
     padding: 1em;
     color: white;
@@ -70,7 +69,7 @@ nav ul {
 
 }
 
-nav ul a input{
+nav ul a input {
     text-decoration: none;
 }
 
@@ -92,7 +91,7 @@ article {
     font-size: 120px;
 }
 
-#middlefont{
+#middlefont {
     font-size: 40px;
 }
 
@@ -134,11 +133,13 @@ tr:nth-of-type(odd) {
 tr {
     background: white;
 }
+
 th {
     background: #333;
     color: white;
     font-weight: bold;
 }
+
 td, th {
     padding: 6px;
     border: 1px solid #ccc;
@@ -175,7 +176,7 @@ td, th {
     background: #fff;
     margin: 0 auto;
     padding: 10px 17px;
-    -webkit-box-shadow: 2px 2px 3px -1px rgba(0,0,0,0.35);
+    -webkit-box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.35);
 }
 
 input, p, option, select {
@@ -191,13 +192,13 @@ input, p, option, select {
     font-size: 25px;
 }
 
-.middlefont, input{
+.middlefont, input {
     font-size: 30px;
 }
 
 /* Include the padding and border in an element's total width and height */
 /** {*/
-    /*box-sizing: border-box;*/
+/*box-sizing: border-box;*/
 /*}*/
 
 /* Remove margins and padding from the list */
@@ -205,6 +206,7 @@ ul.todo {
     margin: 0;
     padding: 0;
     width: 600px;
+    list-style-type: none;
 }
 
 /* Style the list items */
@@ -213,7 +215,7 @@ ul li.todo {
     position: relative;
     padding: 12px 8px 12px 40px;
     background: #eee;
-    font-size: 18px;
+    font-size: 30px;
     transition: 0.2s;
 
     /* make the list items unselectable */
@@ -224,24 +226,24 @@ ul li.todo {
 }
 
 /* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
+ul li.todo:nth-child(odd) {
     background: #f9f9f9;
 }
 
 /* Darker background-color on hover */
-ul li:hover {
+ul li.todo:hover {
     background: #ddd;
 }
 
 /* When clicked on, add a background color and strike out text */
-ul li.checked {
+ul li.todo.checked {
     background: #888;
     color: #fff;
     text-decoration: line-through;
 }
 
 /* Add a "checked" mark when clicked on */
-ul li.checked::before {
+ul li.todo.checked::before {
     content: '';
     position: absolute;
     border-color: #fff;
@@ -259,6 +261,7 @@ ul li.checked::before {
     position: absolute;
     right: 0;
     top: 0;
+    bottom: 0;
     padding: 12px 16px 12px 16px;
 }
 
@@ -267,13 +270,45 @@ ul li.checked::before {
     color: white;
 }
 
-/*!* Style the header *!*/
-/*.header {*/
-    /*background-color: #f44336;*/
-    /*padding: 30px 40px;*/
-    /*color: white;*/
-    /*text-align: center;*/
-/*}*/
+.close:hover:before {
+    content: 'Usuń';
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    top: 0;
+    left: 13px;
+}
+
+.done {
+    position: absolute;
+    right: 50px;
+    top: 0;
+    bottom: 0;
+    padding: 12px 16px 12px 16px;
+    float: right;
+}
+
+.done:hover {
+    background-color: green;
+    color: white;
+    content: 'Zrobione';
+}
+
+.done:hover:before {
+    content: 'Zrobione';
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    top: 0;
+    left: 2px;
+}
+
+
+/* Style the header */
+.header {
+    padding: 0 10px;
+    margin-top: 0;
+}
 
 /* Clear floats after the header */
 .header:after {
@@ -284,11 +319,11 @@ ul li.checked::before {
 
 /* Style the input */
 input.todo {
-    border: none;
+    border: dotted;
     width: 25%;
     padding: 10px;
     float: left;
-    font-size: 16px;
+    font-size: 30px;
 }
 
 /* Style the "Add" button */
@@ -299,7 +334,7 @@ input.todo {
     color: #555;
     float: left;
     text-align: center;
-    font-size: 16px;
+    font-size: 30px;
     cursor: pointer;
     transition: 0.3s;
 }

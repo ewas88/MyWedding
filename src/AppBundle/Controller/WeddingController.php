@@ -20,13 +20,16 @@ class WeddingController extends Controller
         $weddingRepository = $this->getDoctrine()->getRepository('AppBundle:WeddingInfo');
         $wedding = $weddingRepository->find(1);
 
-        if (isset($_SESSION)) {
-            $datetime1 = strtotime(date('Y-m-d'));
-            $datetime2 = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
-            $days = ($datetime2 - $datetime1) / 86400;
+        $session = $request->getSession();
+        $inviteId = $session->get('name');
+
+        if ($inviteId || $this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+            $today = strtotime(date('Y-m-d'));
+            $weddingDate = strtotime($wedding->getWeddingDate()->format('Y-m-d'));
+            $daysUntilWedding = ($weddingDate - $today) / 86400;
 
             return $this->render('AppBundle:Wedding:base.html.twig', array(
-                'days' => $days, 'wedding' => $wedding
+                'days' => $daysUntilWedding, 'wedding' => $wedding
             ));
         } else {
             return $this->render('AppBundle:Wedding:noguest.html.twig', array(
@@ -112,13 +115,13 @@ class WeddingController extends Controller
             $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
             $present = $presentRepository->find($dropPresent);
 
-            $present->setInvitation(NULL);
+            $present->setInvitation(null);
             $em->persist($present);
             $em->flush();
         }
 
         $presentRepository = $this->getDoctrine()->getRepository('AppBundle:Present');
-        $presents = $presentRepository->findBy(array('invitation' => NULL));
+        $presents = $presentRepository->findBy(array('invitation' => null));
 
         $session = $request->getSession();
         $inviteId = $session->get('name');

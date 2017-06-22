@@ -1,6 +1,5 @@
 security:
 
-
     providers:
         in_memory:
             memory:
@@ -25,3 +24,5 @@ security:
             algorithm: bcrypt
             cost: 12
 
+    access_control:
+        - { path: ^/admin, roles: ROLE_USER }
